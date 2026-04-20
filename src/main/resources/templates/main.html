@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>执行 - Coomer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 60px 40px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            width: 90%;
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out;
+        }
+        
+        .execute-form {
+            margin: 30px 0;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        input[type="text"] {
+            flex: 1;
+            max-width: 500px;
+            padding: 15px 20px;
+            font-size: 1.1em;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        input[type="text"]:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+        
+        button {
+            padding: 15px 35px;
+            font-size: 1.1em;
+            background-color: #667eea;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        button:hover {
+            background-color: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .message {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #d4edda;
+            color: #155724;
+            border-radius: 10px;
+            animation: fadeIn 0.5s ease-out;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .result pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #333;
+            margin: 0;
+        }
+        
+        .result p {
+            color: #333;
+            font-size: 1.1em;
+            margin: 0;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function validateUrl() {
+            var query = document.getElementById('queryInput').value.trim();
+            
+            // 验证是否为标准的HTTPS URL
+            var urlPattern = /^https:\/\/[a-zA-Z0-9]([a-zA-Z0-9\-]*[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9\-]*[a-zA-Z0-9])?)*(:[0-9]{1,5})?(\/.*)?$/;
+            
+            if (!urlPattern.test(query)) {
+                alert('请输入有效的HTTPS网址！');
+                return false;
+            }
+            
+            return true;
+        }
+    </script>
+    <div class="container">
+        
+        <form class="execute-form" action="/execute" method="get" onsubmit="return validateUrl()">
+            <div class="input-group">
+                <label for="queryInput"></label><input type="text" name="url" id="queryInput" placeholder="请输入内容..." th:value="${query}" required>
+                <button type="submit">执行</button>
+            </div>
+        </form>
+        
+        <div class="message" th:if="${message != null}">
+            <p th:text="${message}"></p>
+        </div>
+    </div>
+</body>
+</html>

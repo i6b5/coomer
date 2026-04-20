@@ -1,0 +1,55 @@
+# Server Configuration
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+# Spring Configuration
+spring:
+  application:
+    name: coomer
+  
+  # DevTools Configuration
+  devtools:
+    restart:
+      # 启用热重启
+      enabled: true
+      # 额外触发重启的目录
+      additional-paths: src/main/java
+      # 排除不需要监控的文件
+      exclude: static/**,public/**
+    livereload:
+      # 启用LiveReload
+      enabled: true
+  
+  # Thymeleaf Template Configuration
+  thymeleaf:
+    # 模板文件位置
+    prefix: classpath:/templates/
+    # 模板文件后缀
+    suffix: .html
+    # 模板模式
+    mode: HTML
+    # 编码格式
+    encoding: UTF-8
+    # 是否启用模板缓存（开发环境建议关闭，生产环境建议开启）
+    cache: false
+    # 检查模板位置是否存在
+    check-template: true
+    # 检查模板位置是否正确
+    check-template-location: true
+    # 是否启用 Thymeleaf
+    enabled: true
+    # 模板解析器顺序
+    template-resolver-order: 1
+    # 内容类型
+    servlet:
+      content-type: text/html
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    st.coomer: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
